@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers\PageController.php;
+use app\Http\Controllers\PageController;
 
 Route::get('/login', [PageController::class, 'showLogin'])-> name('login');
 Route::get('/dashboard', [PageController::class, 'showDashboard']);
