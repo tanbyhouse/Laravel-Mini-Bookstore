@@ -24,7 +24,7 @@ class PageController extends Controller
             
             return redirect('/dashboard');
         } else {
-            return redirect('/login')->with('error', 'Username atau password salah!');
+            return redirect('/login')->with('error', 'Username or password is incorrect!');
         }
     }
 
@@ -32,22 +32,49 @@ class PageController extends Controller
     public function showDashboard(Request $request){
 
         if (!$request->session()->has('username')) {
-            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
+            return redirect('/login')->with('error', 'Login first pleaseee!');
         }
 
         $username = $request->session()->get('username');
+        $username = $request->session()->get('username');
+        $allBooks = self::getBookData();
 
-        return view('dashboard', ['username' => $username]);
+        $totalJudul = count($allBooks);
+        $totalStok = array_sum(array_column($allBooks, 'stok'));
+
+        $stokMenipis = 0;
+        foreach ($allBooks as $buku) {
+            if ($buku['stok'] < 10) {
+                $stokMenipis++;
+            }
+        }
+
+            return view('dashboard', [
+            'username' => $username,
+            'totalJudul' => $totalJudul,
+            'totalStok' => $totalStok,
+            'stokMenipis' => $stokMenipis
+        ]);
     }
 
-    // showing dashboard
+    // showing pengelolaan
     public function showPengelolaan(Request $request){
 
         if (!$request->session()->has('username')) {
-            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
+            return redirect('/login')->with('error', 'Login first pleaseee!');
         }
 
-        $username = $request->session()->get('username');
+        $allBooks = self::getBookData();
+        $searchTerm = $request->query('search');
+
+        if ($searchTerm) {
+            $filteredBooks = array_filter($allBooks, function($buku) use ($searchTerm) {
+                return stripos($buku['judul'], $searchTerm) !== false;
+            });
+            $dataBuku = $filteredBooks;
+        } else {
+            $dataBuku = $allBooks;
+        }
 
         $dataBuku = [
             ['id' => 1, 'judul' => 'Laskar Pelangi', 'penulis' => 'Andrea Hirata', 'stok' => 195],
@@ -56,14 +83,17 @@ class PageController extends Controller
             ['id' => 4, 'judul' => 'No Longer Human', 'penulis' => 'Osamu Dazai', 'stok' => 5]
         ];
         
-        return view('pengelolaan', ['buku' => $dataBuku]);
+        return view('pengelolaan', [
+            'buku' => $dataBuku,
+            'searchTerm' => $searchTerm
+        ]);
     }
 
     // showing profile
     public function showProfile(Request $request){
 
         if (!$request->session()->has('username')) {
-            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
+            return redirect('/login')->with('error', 'Login first pleaseee!');
         }
 
         $username = $request->session()->get('username');
@@ -71,10 +101,42 @@ class PageController extends Controller
         return view('profile', ['username' => $username]);
     }
 
+    // processing profile update
+    public function handleProfileUpdate(Request $request)
+    {
+        if (!$request->session()->has('username')) {
+            return redirect('/login');
+        }
+
+        $passwordBenar = 'capt123'; 
+
+        $oldPassword = $request->input('old_password');
+        $newPassword = $request->input('new_password');
+
+        if ($oldPassword !== $passwordBenar) {
+            return redirect('/profile')->with('error', 'Old Password is Incorrect!');
+        }
+
+        if (strlen($newPassword) < 5) {
+            return redirect('/profile')->with('error', 'Old password has to have 5 characters minimum!');
+        }
+
+        return redirect('/profile')->with('success', 'Password updated successfully!');
+    }
+
     // processing logout 
     public function handleLogout(Request $request){
         $request->session()->flush();
         
         return redirect('/login');
+    }
+
+    private function getBookData(){
+        return [
+            ['id' => 1, 'judul' => 'Laskar Pelangi', 'penulis' => 'Andrea Hirata', 'stok' => 195],
+            ['id' => 2, 'judul' => 'Norwegian Wood', 'penulis' => 'Haruki Murakami', 'stok' => 8],
+            ['id' => 3, 'judul' => 'Little Women', 'penulis' => 'Louisa May Alcott', 'stok' => 20],
+            ['id' => 4, 'judul' => 'No Longer Human', 'penulis' => 'Osamu Dazai', 'stok' => 5]
+        ];
     }
 }
