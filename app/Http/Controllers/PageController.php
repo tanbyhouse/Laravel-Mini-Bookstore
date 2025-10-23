@@ -24,7 +24,14 @@ class PageController extends Controller
 
     // showing dashboard
     public function showPengelolaan(){
-        return view('pengelolaan');
+        $dataBuku = [
+            ['id' => 1, 'judul' => 'Laskar Pelangi', 'penulis' => 'Andrea Hirata', 'stok' => 195],
+            ['id' => 2, 'judul' => 'Norwegian Wood', 'penulis' => 'Haruki Murakami', 'stok' => 8],
+            ['id' => 3, 'judul' => 'Little Women', 'penulis' => 'Louisa May Alcott', 'stok' => 20],
+            ['id' => 4, 'judul' => 'No Longer Human', 'penulis' => 'Osamu Dazai', 'stok' => 5]
+        ];
+        
+        return view('pengelolaan', ['buku' => $dataBuku]);
     }
 
     // showing profile
