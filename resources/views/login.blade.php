@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Toko Buku Mini</title>
+    <title>Login - Tan's Mini Bookstore</title>
     <style>
-        body { font-family: Arial, sans-serif; display: grid; place-items: center; min-height: 90vh; background-color: #f4f4f4; }
-        .login-card { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 300px; }
-        .login-card h1 { text-align: center; margin-top: 0; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        .btn:hover { background-color: #0056b3; }
+        body { font-family: Arial, sans-serif; display: grid; place-items: center; min-height: 90vh; background: linear-gradient(180deg,#fff0f6,#ffe6f2); }
+        .login-card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(203, 51, 102, 0.08); width: 340px; }
+        .login-card h1 { text-align: center; margin-top: 0; color:#b02a57; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 700; color:#6b0f3a; }
+        .form-group input { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #f2cfe0; border-radius: 6px; background: #fff7fb; }
+        .btn { width: 100%; padding: 10px; background: linear-gradient(90deg,#ff6aa6,#ff3b8a); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 700; }
+        .btn:hover { opacity: 0.95; transform: translateY(-1px); }
+        .alert { padding: 10px; border-radius: 6px; margin-bottom: 12px; color: #7a122f; background: #ffe6f0; border: 1px solid #ffcee1; }
     </style>
 </head>
 
