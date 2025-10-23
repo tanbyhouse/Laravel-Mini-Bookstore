@@ -14,16 +14,41 @@ class PageController extends Controller
     // processing login 
     public function handleLogin(Request $request){
         $username = $request->input('username');
-        return redirect('/dashboard?username=' . $username);
+        $password = $request->input('password');
+
+        $usernameBenar = 'captain';
+        $passwordBenar = 'capt123';
+
+        if ($username === $usernameBenar && $password === $passwordBenar) {
+            $request->session()->put('username', $username);
+            
+            return redirect('/dashboard');
+        } else {
+            return redirect('/login')->with('error', 'Username atau password salah!');
+        }
     }
 
     // showing dashboard
-    public function showDashboard(){
-        return view('dashboard');
+    public function showDashboard(Request $request){
+
+        if (!$request->session()->has('username')) {
+            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
+        }
+
+        $username = $request->session()->get('username');
+
+        return view('dashboard', ['username' => $username]);
     }
 
     // showing dashboard
-    public function showPengelolaan(){
+    public function showPengelolaan(Request $request){
+
+        if (!$request->session()->has('username')) {
+            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
+        }
+
+        $username = $request->session()->get('username');
+
         $dataBuku = [
             ['id' => 1, 'judul' => 'Laskar Pelangi', 'penulis' => 'Andrea Hirata', 'stok' => 195],
             ['id' => 2, 'judul' => 'Norwegian Wood', 'penulis' => 'Haruki Murakami', 'stok' => 8],
@@ -35,7 +60,21 @@ class PageController extends Controller
     }
 
     // showing profile
-    public function showProfile(){
-        return view('profile');
+    public function showProfile(Request $request){
+
+        if (!$request->session()->has('username')) {
+            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu!');
+        }
+
+        $username = $request->session()->get('username');
+        
+        return view('profile', ['username' => $username]);
+    }
+
+    // processing logout 
+    public function handleLogout(Request $request){
+        $request->session()->flush();
+        
+        return redirect('/login');
     }
 }

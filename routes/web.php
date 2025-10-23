@@ -9,3 +9,4 @@ Route::get('/pengelolaan', [PageController::class, 'showPengelolaan']);
 Route::get('/profile', [PageController::class, 'showProfile']);
 
 Route::post('/login', [PageController::class, 'handleLogin']);
+Route::post('/logout', [PageController::class, 'handleLogout'])-> name('logout');

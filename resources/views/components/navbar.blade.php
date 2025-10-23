@@ -7,7 +7,10 @@
             <a href="/dashboard" style="color: white; text-decoration: none;">Dashboard</a>
             <a href="/pengelolaan" style="color: white; text-decoration: none;">Management</a>
             <a href="/profile" style="color: white; text-decoration: none;">Profile</a>
-            <a href="/login" style="color: red; text-decoration: none;">Logout</a>
+            <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                @csrf
+                <button type="submit" style="background: none; border: none; color: red; cursor: pointer; padding: 0;">Logout</button>
+            </form>
         </div>
     </div>
 </nav>

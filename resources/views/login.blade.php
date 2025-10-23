@@ -19,6 +19,13 @@
 <body>
     <div class="login-card">
         <h1>Login</h1>
+
+        @if(session('error'))
+            <p style="color: red; text-align: center; margin-bottom: 15px;">
+                {{ session('error') }}
+            </p>
+        @endif
+        
         <form action="/login" method="POST">
             @csrf 
 

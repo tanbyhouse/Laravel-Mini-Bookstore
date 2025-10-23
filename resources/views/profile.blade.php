@@ -3,10 +3,6 @@
 @section('title', 'User Profile')
 
 @section('content')
-    @php
-        $username = request()->query('username', 'Captain');
-    @endphp
-
     <h1>Profile Page</h1>
     <p>{{$username}}'s Profile Information:</p>
 
