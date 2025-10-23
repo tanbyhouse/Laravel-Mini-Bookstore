@@ -36,7 +36,6 @@ class PageController extends Controller
         }
 
         $username = $request->session()->get('username');
-        $username = $request->session()->get('username');
         $allBooks = self::getBookData();
 
         $totalJudul = count($allBooks);
@@ -75,13 +74,6 @@ class PageController extends Controller
         } else {
             $dataBuku = $allBooks;
         }
-
-        $dataBuku = [
-            ['id' => 1, 'judul' => 'Laskar Pelangi', 'penulis' => 'Andrea Hirata', 'stok' => 195],
-            ['id' => 2, 'judul' => 'Norwegian Wood', 'penulis' => 'Haruki Murakami', 'stok' => 8],
-            ['id' => 3, 'judul' => 'Little Women', 'penulis' => 'Louisa May Alcott', 'stok' => 20],
-            ['id' => 4, 'judul' => 'No Longer Human', 'penulis' => 'Osamu Dazai', 'stok' => 5]
-        ];
         
         return view('pengelolaan', [
             'buku' => $dataBuku,
@@ -100,30 +92,7 @@ class PageController extends Controller
         
         return view('profile', ['username' => $username]);
     }
-
-    // processing profile update
-    public function handleProfileUpdate(Request $request)
-    {
-        if (!$request->session()->has('username')) {
-            return redirect('/login');
-        }
-
-        $passwordBenar = 'capt123'; 
-
-        $oldPassword = $request->input('old_password');
-        $newPassword = $request->input('new_password');
-
-        if ($oldPassword !== $passwordBenar) {
-            return redirect('/profile')->with('error', 'Old Password is Incorrect!');
-        }
-
-        if (strlen($newPassword) < 5) {
-            return redirect('/profile')->with('error', 'Old password has to have 5 characters minimum!');
-        }
-
-        return redirect('/profile')->with('success', 'Password updated successfully!');
-    }
-
+    
     // processing logout 
     public function handleLogout(Request $request){
         $request->session()->flush();

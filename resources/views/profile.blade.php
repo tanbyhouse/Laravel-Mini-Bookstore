@@ -24,28 +24,5 @@
         <li><strong>Status:</strong> Bookstore Owner</li>
         <li><strong>Joined:</strong> November 22, 2022</li>
     </ul>
-
-    <div class="profile-form">
-        <h2>Update Password</h2>
-
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-error">{{ session('error') }}</div>
-        @endif
-
-        <form action="/profile" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="old_password">Old Password</label>
-                <input type="password" name="old_password" required>
-            </div>
-            <div class="form-group">
-                <label for="new_password">New Password</label>
-                <input type="password" name="new_password" required>
-            </div>
-            <button type="submit" class="btn-update">Update Password</button>
-        </form>
     </div>
 @endsection
